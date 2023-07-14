@@ -1,0 +1,33 @@
+.welcome {
+  height: 100vh;
+}
+
+.icon {
+  padding: 1rem 1rem;
+  border-radius: 1rem;
+  background-color: #4285f4;
+}
+.demo-btn {
+  color: #4285f4;
+  background-color: #c0cee9;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-weight: bold;
+}
+.todo-des {
+  height: 60vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: 1.2rem;
+  font-family: "Courier New", Courier, monospace;
+}
+.add-btn {
+  bottom: 10%;
+  right: 5%;
+}
+.invalid-feedback {
+  display: block !important;
+}
