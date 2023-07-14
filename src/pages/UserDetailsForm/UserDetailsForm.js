@@ -31,6 +31,7 @@ function UserDetailsForm() {
       .min(10, "Phone Should contain Min 10 characters")
       .max(10, "Phone Should contain Max 10 characters")
       .required("Phone is required please !"),
+    radio: Yup.boolean().required(),
   };
 
   const schema = object({

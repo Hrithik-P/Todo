@@ -8,7 +8,7 @@ function InputField({ label, type, placeHolder, name, index }) {
     control,
     formState: { errors },
   } = useFormContext();
-
+  console.log(errors);
   return (
     <FormGroup>
       <Label for={`for${label}`}>{label}</Label>

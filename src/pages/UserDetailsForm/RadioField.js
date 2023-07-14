@@ -6,11 +6,7 @@ function RadioField({ name }) {
   const { register } = useFormContext();
   return (
     <FormGroup>
-      <input
-        {...register(name, { required: true })}
-        type="radio"
-        value="true"
-      />
+      <input {...register(name)} type="radio" value="true" />
     </FormGroup>
   );
 }
