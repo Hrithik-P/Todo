@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Controller,
   FormProvider,
   useFieldArray,
   useForm,
@@ -9,10 +8,6 @@ import {
   Button,
   Col,
   Form,
-  FormFeedback,
-  FormGroup,
-  Input,
-  Label,
   Row,
 } from "reactstrap";
 import * as Yup from "yup";
@@ -23,16 +18,25 @@ import { object, array, string } from "yup";
 
 function UserDetailsForm() {
   const formSchema = {
-    email: Yup.string()
-      .email("Please enter a valid email format !")
-      .required("Email is required please !"),
-    name: Yup.string().required("Name is required please !"),
+    radio: Yup.string().required(),
+    email: Yup.string().when('radio', {
+      is: true,
+      then: () => Yup.string(),
+      otherwise: () => Yup.string().email('Please enter a valid email format!').required('Email is required, please!'),
+    }),
+    name: Yup.string().when('radio', {
+      is: true,
+      then: () => Yup.string(),
+      otherwise: () => Yup.string().required('Name is required please !'),
+    }),
     phone: Yup.string()
-      .min(10, "Phone Should contain Min 10 characters")
-      .max(10, "Phone Should contain Max 10 characters")
-      .required("Phone is required please !"),
-    radio: Yup.boolean().required(),
+      .when('radio', {
+        is: true,
+        then: () => Yup.string(),
+        otherwise: () => Yup.string().min(10, "Phone Should contain Min 10 characters").max(10, "Phone Should contain Max 10 characters").required('Phone is required please !'),
+      }),
   };
+
 
   const schema = object({
     list: array().of(object().shape(formSchema)),
@@ -51,13 +55,23 @@ function UserDetailsForm() {
     },
     resolver: yupResolver(schema),
   });
-  const { control } = methods;
+  const { control, formState: {errors},setValue } = methods;
   const { fields, append, remove } = useFieldArray({
     control,
     name: "list",
   });
-
+  
+  
   const onSubmit = (data) => console.log(data);
+
+  const handleRadio = (i) => {
+    setValue(`list[${i}].radio`,true);
+    fields.forEach((field,index) => {
+      if(index !== i){
+        setValue(`list[${index}].radio`,false);
+      }
+  })
+  };
 
   const addMore = () => {
     append({
@@ -75,13 +89,13 @@ function UserDetailsForm() {
           {fields.map((field, index) => (
             <Row key={field.id} className="d-flex align-items-center">
               <Col md={1}>
-                <RadioField name={`list.${index}.radio`} />
+                <RadioField name={`list.radio`} currentValue={field.radio} index={index} handleRadio={handleRadio}/>
               </Col>
               <Col md={3}>
                 <InputField
                   label="Name"
                   type={"text"}
-                  index={index}
+                 
                   placeHolder={"Enter Your Name"}
                   name={`list.${index}.name`}
                 />
@@ -90,7 +104,7 @@ function UserDetailsForm() {
                 <InputField
                   label="Phone"
                   type={"tel"}
-                  index={index}
+                 
                   placeHolder={"Enter Your Phone Number"}
                   name={`list.${index}.phone`}
                 />
@@ -98,7 +112,7 @@ function UserDetailsForm() {
               <Col md={3}>
                 <InputField
                   label="Email"
-                  index={index}
+                 
                   type={"email"}
                   placeHolder={"Enter Your Email"}
                   name={`list.${index}.email`}

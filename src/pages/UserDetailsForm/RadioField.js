@@ -1,13 +1,14 @@
 import React from "react";
-import { Controller, useFormContext } from "react-hook-form";
-import { FormGroup, Input } from "reactstrap";
+import {  useFormContext } from "react-hook-form";
 
-function RadioField({ name }) {
+
+function RadioField({ name, currentValue, index,handleRadio}) {
   const { register } = useFormContext();
+  
   return (
-    <FormGroup>
-      <input {...register(name)} type="radio" value="true" />
-    </FormGroup>
+   
+      <input {...register(name)} type="radio" value={currentValue} onChange={() => handleRadio(index)} />
+    
   );
 }
 

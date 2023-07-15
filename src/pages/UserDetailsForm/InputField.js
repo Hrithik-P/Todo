@@ -3,12 +3,12 @@ import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { FormFeedback, FormGroup, Input, Label } from "reactstrap";
 
-function InputField({ label, type, placeHolder, name, index }) {
+function InputField({ label, type, placeHolder, name }) {
   const {
     control,
     formState: { errors },
   } = useFormContext();
-  console.log(errors);
+  
   return (
     <FormGroup>
       <Label for={`for${label}`}>{label}</Label>
