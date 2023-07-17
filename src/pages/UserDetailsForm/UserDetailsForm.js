@@ -18,22 +18,22 @@ import { object, array, string } from "yup";
 
 function UserDetailsForm() {
   const formSchema = {
-    radio: Yup.string().required(),
+    radio: Yup.boolean(),
     email: Yup.string().when('radio', {
       is: true,
-      then: () => Yup.string(),
-      otherwise: () => Yup.string().email('Please enter a valid email format!').required('Email is required, please!'),
+      then: () => Yup.string().email('Please enter a valid email format!').required('Email is required, please!'),
+      otherwise: () => Yup.string(),
     }),
     name: Yup.string().when('radio', {
       is: true,
-      then: () => Yup.string(),
-      otherwise: () => Yup.string().required('Name is required please !'),
+      then: () => Yup.string().required('Name is required please !'),
+      otherwise: () => Yup.string(),
     }),
     phone: Yup.string()
       .when('radio', {
         is: true,
-        then: () => Yup.string(),
-        otherwise: () => Yup.string().min(10, "Phone Should contain Min 10 characters").max(10, "Phone Should contain Max 10 characters").required('Phone is required please !'),
+        then: () => Yup.string().min(10, "Phone Should contain Min 10 characters").max(10, "Phone Should contain Max 10 characters").required('Phone is required please !'),
+        otherwise: () => Yup.string(),
       }),
   };
 
