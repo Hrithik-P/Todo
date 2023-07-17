@@ -7,7 +7,7 @@ function RadioField({ name, currentValue, index,handleRadio}) {
   
   return (
    
-      <input {...register(name)} type="radio" value={currentValue} onChange={() => handleRadio(index)} />
+      <input {...register(name)} type="radio" onChange={() => handleRadio(index)} />
     
   );
 }
