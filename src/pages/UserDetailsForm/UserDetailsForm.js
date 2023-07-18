@@ -14,7 +14,7 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import InputField from "./InputField";
 import RadioField from "./RadioField";
-import { object, array, string } from "yup";
+import { object, array } from "yup";
 
 function UserDetailsForm() {
   const formSchema = {
@@ -49,7 +49,7 @@ function UserDetailsForm() {
           name: "",
           email: "",
           phone: "",
-          radio: false,
+          radio: true,
         },
       ],
     },
@@ -65,6 +65,7 @@ function UserDetailsForm() {
   const onSubmit = (data) => console.log(data);
 
   const handleRadio = (i) => {
+   
     setValue(`list[${i}].radio`,true);
     fields.forEach((field,index) => {
       if(index !== i){
@@ -119,12 +120,13 @@ function UserDetailsForm() {
                 />
               </Col>
               <Col md={1}>
-                {fields.length > 1 && (
+                {fields.length > 1 && !field.radio &&(
                   <Button color="danger" outline onClick={() => remove(index)}>
                     Remove
                   </Button>
                 )}
               </Col>
+              
             </Row>
           ))}
 

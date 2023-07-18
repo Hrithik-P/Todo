@@ -7,7 +7,7 @@ function RadioField({ name, currentValue, index,handleRadio}) {
   
   return (
    
-      <input {...register(name)} type="radio" onChange={() => handleRadio(index)} />
+      <input {...register(name,{required: true})} type="radio" defaultChecked={currentValue === true} onChange={() => handleRadio(index)} />
     
   );
 }
